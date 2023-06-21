@@ -36,6 +36,11 @@ export const defaultTheme = {
 
             'textS': '400 1.4rem "Roboto", sans-serif',
             'textXS': '400 1.2rem "Roboto", sans-serif',
+
+
+            'tag': '700 1rem "Roboto", sans-serif',
+            'buttonG': '700 1.4rem "Roboto", sans-serif',
+            'buttonM': '400 1.2rem "Roboto", sans-serif',
         }
     }
 }

@@ -1,16 +1,21 @@
 import { ThemeProvider } from 'styled-components'
-import { defaultTheme } from './styles/theme/default'
+
+import { Router } from './routes/index.routes'
+
 import { GlobalStyle } from './styles/global'
+import { defaultTheme } from './styles/theme/default'
+import { CoffeeProvider } from './context/CoffeeContext'
 
 
 function App() {
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <p>MEU MUNDO</p>
-
-      <GlobalStyle />
-    </ThemeProvider>
+    <CoffeeProvider>
+      <ThemeProvider theme={defaultTheme}>
+        <Router />
+        <GlobalStyle />
+      </ThemeProvider>
+    </CoffeeProvider>
   )
 }
 

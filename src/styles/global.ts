@@ -19,4 +19,17 @@ export const GlobalStyle = createGlobalStyle`
     :focus {
         box-shadow: 0 0 0 1px ${({ theme }) => theme.colors['yellow-dark']};
     }
+
+    .container {
+        width: 144.4rem;
+        padding: 0 16rem;
+
+        margin: 0 auto;
+    }
+
+    button {
+        cursor: pointer;
+        outline: none;
+        border: none;
+    }
 `
