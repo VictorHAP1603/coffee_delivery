@@ -7,7 +7,6 @@ export function OurCoffees() {
     const { coffeState } = useCoffee()
     const { coffees } = coffeState
 
-
     return (
         <OurCoffeesContainer className="container">
             <h2>Nossos Cafés</h2>

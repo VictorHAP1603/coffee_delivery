@@ -1,26 +1,33 @@
 import { v4 as uuidV4 } from 'uuid'
 
-type CoffeesTags = 
-    'tradicional' | 
-    'gelado'      | 
-    'com leite'   | 
-    'especial'    | 
-    'alcoólico'    
-    
+type CoffeesTags =
+    'tradicional' |
+    'gelado' |
+    'com leite' |
+    'especial' |
+    'alcoólico'
+
 interface CoffeeTagProps {
     tag: CoffeesTags
     id: string
 }
 
 export interface CoffeeProps {
-    id: number, 
+    id: number,
     src: string,
     tags: CoffeeTagProps[],
     title: string,
-    description: string, 
+    description: string,
     price: number,
 }
- 
+
+export interface CoffeesAddedListProps {
+    id: number
+    title: string
+    price: number
+    quantity?: number
+}
+
 export const coffeeList: CoffeeProps[] = [
     {
         id: 1,
@@ -49,7 +56,7 @@ export const coffeeList: CoffeeProps[] = [
     {
         id: 4,
         src: '/assets/img/coffees/expresso_gelado.png',
-        tags: [{ id: uuidV4(), tag: 'gelado'}, { id: uuidV4(), tag: 'tradicional' }],
+        tags: [{ id: uuidV4(), tag: 'gelado' }, { id: uuidV4(), tag: 'tradicional' }],
         title: 'Expresso Gelado',
         description: 'Bebida preparada com café expresso e cubos de gelo',
         price: 990
@@ -89,7 +96,7 @@ export const coffeeList: CoffeeProps[] = [
     {
         id: 11,
         src: '/assets/img/coffees/mocaccino.png',
-        tags: [{ id: uuidV4(), tag: 'tradicional' }, { id: uuidV4(), tag: 'com leite' }  ],
+        tags: [{ id: uuidV4(), tag: 'tradicional' }, { id: uuidV4(), tag: 'com leite' }],
         title: 'Mocaccino',
         description: 'Café expresso com calda de chocolate, pouco leite e espuma',
         price: 990
@@ -97,7 +104,7 @@ export const coffeeList: CoffeeProps[] = [
     {
         id: 10,
         src: '/assets/img/coffees/chocolate_quente.png',
-        tags: [{ id: uuidV4(), tag: 'especial' }, { id: uuidV4(), tag: 'com leite'}],
+        tags: [{ id: uuidV4(), tag: 'especial' }, { id: uuidV4(), tag: 'com leite' }],
         title: 'Chocolate Quente',
         description: 'Bebida feita com chocolate dissolvido no leite quente e café',
         price: 990
@@ -109,7 +116,7 @@ export const coffeeList: CoffeeProps[] = [
         title: 'Cubano',
         description: 'Drink gelado de café expresso com rum, creme de leite e hortelã',
         price: 990
-    }, 
+    },
     {
         id: 14,
         src: '/assets/img/coffees/havaiano.png',
@@ -124,7 +131,7 @@ export const coffeeList: CoffeeProps[] = [
         tags: [{ id: uuidV4(), tag: 'especial' }],
         title: 'Árabe',
         description: 'Bebida preparada com grãos de café árabe e especiarias',
-        price: 990 
+        price: 990
     },
     {
         id: 16,

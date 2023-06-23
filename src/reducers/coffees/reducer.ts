@@ -1,54 +1,44 @@
-import { CoffeeProps } from "../../utils/coffees";
+import { CoffeeProps, CoffeesAddedListProps } from "../../utils/coffees";
 import { CoffeeAction, CoffeeActionTypes } from "./action";
-
-export interface coffeesAddedListProps {
-    id: number
-    title: string
-    price: number
-    quantity?: number
-}
+import { produce } from 'immer'
 
 export interface CoffeeState {
     coffees: CoffeeProps[] | null
-    coffesAdded: coffeesAddedListProps[] | undefined
+    coffesAdded: CoffeesAddedListProps[] | undefined
 }
 
 export const coffeeReducer = (state: CoffeeState, action: CoffeeAction) => {
 
     switch (action.type) {
         case CoffeeActionTypes.REQUEST_COFFEES:
-            return { ...state, coffees: action.payload }
+            return produce(state, draft => {
+                draft.coffees = action.payload
+            })
 
         case CoffeeActionTypes.ADD_COFFEE_TO_CART: {
             const nextCoffee = action.payload[0]
             const ammountAdded = action.payload.length
 
             if (state.coffesAdded !== undefined) {
-                const nextCoffeeIsAdded = state.coffesAdded.find(coffee => coffee.id === nextCoffee.id)
+                const indexOfNextCoffeeIsAdded = state.coffesAdded.findIndex(coffee => coffee.id === nextCoffee.id)
 
-                if (nextCoffeeIsAdded) {
-                    const coffees = state.coffesAdded.map(coffee => {
-                        return coffee.id === nextCoffee.id
-                            ? { ...coffee, quantity: coffee.quantity! + ammountAdded }
-                            : coffee
+                if (indexOfNextCoffeeIsAdded >= 0) {
+                    return produce(state, draft => {
+                        draft.coffesAdded![indexOfNextCoffeeIsAdded].quantity! += ammountAdded
                     })
-
-                    return { ...state, coffesAdded: coffees }
                 } else {
-                    return { 
-                        ...state, 
-                        coffesAdded: [...state.coffesAdded, {...nextCoffee, quantity: ammountAdded}]
-                    }
+                    return produce(state, draft => {
+                        draft.coffesAdded?.push({ ...nextCoffee, quantity: ammountAdded })
+                    })
                 }
 
             } else {
-                return { 
-                    ...state, 
-                    coffesAdded: [{...nextCoffee, quantity: ammountAdded}]
-                }
+                return produce(state, draft => {
+                    draft.coffesAdded = [{ ...nextCoffee, quantity: ammountAdded }]
+                })
             }
-            
+
         } default:
             return state;
     }
-}   
+}

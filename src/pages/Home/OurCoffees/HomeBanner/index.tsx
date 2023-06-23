@@ -1,14 +1,14 @@
 import { ShoppingCart, Package, Timer, Coffee } from 'phosphor-react';
 import { useTheme } from 'styled-components';
 
-import HommeBannerImg from '../../../assets/img/home_image.png'
+import HommeBannerImg from '../../../../assets/img/home_image.png'
 
-import { 
-    HomeBannerContainer, 
-    HomeBannerContent, 
-    HomeBannerContentIntro, 
-    HomeBannerContentIntroItem, 
-    HomeBannerImage 
+import {
+    HomeBannerContainer,
+    HomeBannerContent,
+    HomeBannerContentIntro,
+    HomeBannerContentIntroItem,
+    HomeBannerImage
 } from "./style";
 
 
@@ -34,7 +34,7 @@ export function HomeBanner() {
             icon: <Timer size={18} weight='fill' />,
             text: 'Entrega rápida e rastreada',
             color: theme?.colors['yellow']
-  
+
         },
         {
             id: 4,
@@ -54,7 +54,7 @@ export function HomeBanner() {
                     <HomeBannerContentIntro>
                         {homeBannerContentIntroItems.map((item) => (
                             <HomeBannerContentIntroItem key={item.id}>
-                                <div style={{backgroundColor: item.color}}> 
+                                <div style={{ backgroundColor: item.color }}>
                                     {item.icon}
                                 </div>
 

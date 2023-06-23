@@ -1,5 +1,5 @@
 import { CoffeeProps } from "../../utils/coffees";
-import { coffeesAddedListProps } from "./reducer";
+import { CoffeesAddedListProps } from "./reducer";
 
 export interface RequestCoffeeActionProps {
     type: CoffeeActionTypes.REQUEST_COFFEES
@@ -8,7 +8,7 @@ export interface RequestCoffeeActionProps {
 
 export interface AddCoffeeToCartActionProps {
     type: CoffeeActionTypes.ADD_COFFEE_TO_CART
-    payload: coffeesAddedListProps[]
+    payload: CoffeesAddedListProps[]
 }
 
 export type CoffeeAction = RequestCoffeeActionProps | AddCoffeeToCartActionProps
@@ -25,7 +25,7 @@ export function requestCoffeesAction(coffees: CoffeeProps[]): RequestCoffeeActio
     }
 }
 
-export function addCoffeeToCartAction(coffeesAdded: coffeesAddedListProps[]): AddCoffeeToCartActionProps {
+export function addCoffeeToCartAction(coffeesAdded: CoffeesAddedListProps[]): AddCoffeeToCartActionProps {
     return {
         type: CoffeeActionTypes.ADD_COFFEE_TO_CART,
         payload: coffeesAdded

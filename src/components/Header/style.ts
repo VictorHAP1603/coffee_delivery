@@ -15,13 +15,13 @@ export const HeaderContainer = styled.header`
         height: 100%;
     }
 
-` 
+`
 
 export const Actions = styled.div`
     display: flex;
     align-items: center;
     gap: 12px;
-    
+
 `
 
 export const Location = styled.div`
@@ -84,4 +84,12 @@ export const TotalItensCart = styled.span`
     font: ${p => p.theme.fonts.Roboto['textXS']};
     font-weight: bold;
     color: ${p => p.theme.colors['white']};
+
+    transition: all .4s;
+    transform: scale(0);
+
+    &.active {
+        transform: scale(1);
+    }
+
 `

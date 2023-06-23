@@ -1,10 +1,16 @@
 import { MapPin, ShoppingCart } from 'phosphor-react';
+import { useCoffee } from '../../hooks/useCoffe';
 
+// styles
 import { HeaderContainer, Actions, Cart, Location, TotalItensCart } from "./style";
 
+// assets
 import CoffeDeliveryImg from '../../assets/img/coffe_delivery_logo.svg';
 
 export function Header() {
+
+    const { totalItensOnCart } = useCoffee()
+
     return (
         <HeaderContainer>
             <div className="container">
@@ -18,7 +24,7 @@ export function Header() {
 
                     <Cart>
                         <ShoppingCart size={24} weight="fill" />
-                        {/* <TotalItensCart>2</TotalItensCart> */}
+                        <TotalItensCart className={`${!!totalItensOnCart ? 'active' : ''}`} >{totalItensOnCart}</TotalItensCart>
                     </Cart>
                 </Actions>
             </div>
