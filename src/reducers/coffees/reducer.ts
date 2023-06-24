@@ -1,6 +1,7 @@
 import { CoffeeProps, CoffeesAddedListProps } from "../../utils/coffees";
-import { CoffeeAction, CoffeeActionTypes } from "./action";
+import { CoffeeActionTypes } from "./action";
 import { produce } from 'immer'
+import { CoffeeAction } from "./types";
 
 export interface CoffeeState {
     coffees: CoffeeProps[] | null
@@ -38,7 +39,42 @@ export const coffeeReducer = (state: CoffeeState, action: CoffeeAction) => {
                 })
             }
 
-        } default:
+        }
+
+        case CoffeeActionTypes.REMOVE_ONE_COFFEE_FROM_THE_CART: {
+            const id = action.payload
+            const coffeeSelectedIndex = state.coffesAdded?.findIndex(coffee => coffee.id === id)
+
+            if (!coffeeSelectedIndex && coffeeSelectedIndex !== 0) return state
+
+            if (coffeeSelectedIndex >= 0) {
+                return produce(state, draft => {
+                    const coffeeSelected = draft.coffesAdded![coffeeSelectedIndex]
+                    if (coffeeSelected.quantity! > 1) {
+                        coffeeSelected.quantity! -= 1
+                    }
+                })
+            }
+
+            return state
+        }
+
+        case CoffeeActionTypes.REMOVE_COFFEE_FROM_THE_CART: {
+            const id = action.payload
+            const coffeeSelectedIndex = state.coffesAdded?.findIndex(coffee => coffee.id === id)
+
+            if (!coffeeSelectedIndex && coffeeSelectedIndex !== 0) return state
+
+            if (coffeeSelectedIndex >= 0) {
+                return produce(state, draft => {
+                    draft.coffesAdded?.splice(coffeeSelectedIndex, 1)
+                })
+            }
+
+            return state
+        }
+
+        default:
             return state;
     }
 }

@@ -31,7 +31,7 @@ export const CoffeeAddQuantityContainer = styled.div`
         transition: all .4s;
 
         &:hover {
-            background-color: ${props => props.theme.colors['base-hover']};
+            color: ${props => props.theme.colors['purple-dark']};
         }
 
         &:first-child {

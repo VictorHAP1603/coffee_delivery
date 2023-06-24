@@ -6,6 +6,7 @@ import { HeaderContainer, Actions, Cart, Location, TotalItensCart } from "./styl
 
 // assets
 import CoffeDeliveryImg from '../../assets/img/coffe_delivery_logo.svg';
+import { NavLink } from 'react-router-dom';
 
 export function Header() {
 
@@ -14,7 +15,9 @@ export function Header() {
     return (
         <HeaderContainer>
             <div className="container">
-                <img src={CoffeDeliveryImg} alt="" />
+                <NavLink to="/">
+                    <img src={CoffeDeliveryImg} alt="" />
+                </NavLink>
 
                 <Actions>
                     <Location>
@@ -22,10 +25,12 @@ export function Header() {
                         <span>São Paulo, SP</span>
                     </Location>
 
-                    <Cart>
-                        <ShoppingCart size={24} weight="fill" />
-                        <TotalItensCart className={`${!!totalItensOnCart ? 'active' : ''}`} >{totalItensOnCart}</TotalItensCart>
-                    </Cart>
+                    <NavLink to="/checkout">
+                        <Cart>
+                            <ShoppingCart size={24} weight="fill" />
+                            <TotalItensCart className={`${!!totalItensOnCart ? 'active' : ''}`} >{totalItensOnCart}</TotalItensCart>
+                        </Cart>
+                    </NavLink>
                 </Actions>
             </div>
         </HeaderContainer>

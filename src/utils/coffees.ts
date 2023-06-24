@@ -26,6 +26,7 @@ export interface CoffeesAddedListProps {
     title: string
     price: number
     quantity?: number
+    src: string
 }
 
 export const coffeeList: CoffeeProps[] = [

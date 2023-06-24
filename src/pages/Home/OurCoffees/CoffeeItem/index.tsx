@@ -34,11 +34,12 @@ export function CoffeeItem({ coffee }: CoffeeItemProps) {
         }).format(price / 100)
     }
 
-    function formatCoffeeToCoffeesAddedList(coffee: CoffeeProps) {
+    function formatCoffeeToCoffeesAddedList(coffee: CoffeeProps): CoffeesAddedListProps {
         return {
             id: coffee.id,
             title: coffee.title,
-            price: coffee.price
+            price: coffee.price,
+            src: coffee.src,
         }
     }
 

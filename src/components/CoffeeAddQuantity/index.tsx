@@ -9,9 +9,9 @@ interface CoffeeAddQuantityProps {
 export function CoffeeAddQuantity({ quantity, handleAddQuantity, handleRemoveQuantity }: CoffeeAddQuantityProps) {
   return (
     <CoffeeAddQuantityContainer>
-      <button onClick={handleRemoveQuantity}>-</button>
+      <button type="button" onClick={handleRemoveQuantity}>-</button>
       <span>{quantity}</span>
-      <button onClick={handleAddQuantity} >+</button>
+      <button type="button" onClick={handleAddQuantity} >+</button>
     </CoffeeAddQuantityContainer>
   )
 }
