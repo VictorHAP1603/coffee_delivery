@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money } from "phosphor-react";
 
-// Components
-import { CoffeeListItem } from "./CoffeListItem";
+// components
+import { PriceTotalContainer } from "./PriceTotalContainer";
+import { SelectedCoffeesList } from "./SelectedCoffeeList";
 
 import {
   CheckoutContainer,
@@ -15,21 +17,43 @@ import {
   CheckoutAddressLabel,
   CheckoutPayment,
   CheckoutPaymentHeader,
-  CheckoutTypesOfPayment,
+  CheckoutPaymentMethods,
   TypeOfPaymentItem,
   CheckoutSelectedCoffees,
-  SelectedCoffeesList,
-  PriceContainer,
   CheckoutButton,
-  NoCoffeeSelected
 } from "./style";
 
-import { useCoffee } from "../../hooks/useCoffe";
+// import { useCoffee } from "../../hooks/useCoffe";
+
+const paymentMethods = [
+  {
+    id: 1,
+    title: "Cartão de Crédito",
+    icon: <CreditCard size={22} />
+  },
+  {
+    id: 2,
+    title: "Cartão de Débito",
+    icon: <Bank size={22} />
+  },
+  {
+    id: 3,
+    title: "Dinheiro",
+    icon: <Money size={22} />
+  },
+]
 
 export function Checkout() {
-  const { coffeState, formattedTotalPrice, formattedTotalPriceOfItemsInCart } = useCoffee()
+  const [paymentMethodActive, setPaymentMethodActive] = useState<number | null>(null)
 
-  const { coffesAdded } = coffeState
+  function handlePaymentMethodActive(id: number) {
+    if (paymentMethodActive === id) {
+      console.log('desativou')
+      setPaymentMethodActive(null)
+    } else {
+      setPaymentMethodActive(id)
+    }
+  }
 
   return (
     <CheckoutContainer>
@@ -88,22 +112,19 @@ export function Checkout() {
               </div>
             </CheckoutPaymentHeader>
 
-            <CheckoutTypesOfPayment>
-              <TypeOfPaymentItem type="button">
-                <CreditCard size={22} />
-                <span>Cartão de Crédito</span>
-              </TypeOfPaymentItem>
-
-              <TypeOfPaymentItem type="button">
-                <Bank size={22} />
-                <span>Cartão de Débito</span>
-              </TypeOfPaymentItem>
-
-              <TypeOfPaymentItem type="button">
-                <Money size={22} />
-                <span>Dinheiro</span>
-              </TypeOfPaymentItem>
-            </CheckoutTypesOfPayment>
+            <CheckoutPaymentMethods>
+              {paymentMethods.map(type => (
+                <TypeOfPaymentItem
+                  className={paymentMethodActive === type.id ? 'active' : ''}
+                  key={type.id}
+                  onClick={() => handlePaymentMethodActive(type.id)}
+                  type="button"
+                >
+                  {type.icon}
+                  <span>{type.title}</span>
+                </TypeOfPaymentItem>
+              ))}
+            </CheckoutPaymentMethods>
 
           </CheckoutPayment>
 
@@ -113,33 +134,8 @@ export function Checkout() {
           <CheckoutSubtitle>Cafés selecionados</CheckoutSubtitle>
 
           <CheckoutSelectedCoffees>
-            <SelectedCoffeesList>
-              {!coffesAdded && (
-                <NoCoffeeSelected>Nenhum café selecionado</NoCoffeeSelected>
-              )}
-
-              {coffesAdded && coffesAdded.length > 0 && coffesAdded.map(coffee => (
-                <CoffeeListItem coffee={coffee} />
-              ))}
-            </SelectedCoffeesList>
-
-            <PriceContainer>
-              <div>
-                <span>Total de itens</span>
-                <span>{formattedTotalPriceOfItemsInCart}</span>
-              </div>
-
-              <div>
-                <span>Entrega</span>
-                <span>R$ 3,50</span>
-              </div>
-
-              <div>
-                <span>Total</span>
-                <span>{formattedTotalPrice}</span>
-              </div>
-            </PriceContainer>
-
+            <SelectedCoffeesList />
+            <PriceTotalContainer />
             <CheckoutButton type="submit">Confirmar Pedido</CheckoutButton>
           </CheckoutSelectedCoffees>
         </SelectedCoffees>

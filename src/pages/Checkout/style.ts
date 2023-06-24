@@ -154,7 +154,7 @@ export const CheckoutPaymentHeader = styled(CheckoutHeaderBlock)`
   }
 `
 
-export const CheckoutTypesOfPayment = styled.div`
+export const CheckoutPaymentMethods = styled.div`
   display: flex;
   justify-content: space-between;
 
@@ -188,11 +188,11 @@ export const TypeOfPaymentItem = styled.button`
     transition: all .2s;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: ${({ theme }) => theme.colors['base-hover']};
   }
 
-  &:focus,
   &.active {
     outline: none;
     box-shadow: 0 0 0 1px ${({ theme }) => theme.colors['purple']};
@@ -208,54 +208,6 @@ export const TypeOfPaymentItem = styled.button`
 
 export const CheckoutSelectedCoffees = styled(CheckoutBlock)`
   border-radius: 0 44px 0 44px;
-`
-
-export const SelectedCoffeesList = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  gap: 24px;
-`
-
-export const PriceContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 12px;
-
-  margin-bottom: 24px;
-
-  div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    span:nth-child(1) {
-      font: ${({ theme }) => theme.fonts.Roboto['textS']};
-      color: ${({ theme }) => theme.colors['base-text']};
-    }
-
-    span:nth-child(2) {
-      font: ${({ theme }) => theme.fonts.Roboto['textMRegular']};
-      color: ${({ theme }) => theme.colors['base-text']};
-    }
-  }
-
-  div:last-child {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    span:nth-child(1) {
-      font: ${({ theme }) => theme.fonts.Roboto['textLBold']};
-      color: ${({ theme }) => theme.colors['base-subtitle']};
-    }
-
-    span:nth-child(2) {
-      font: ${({ theme }) => theme.fonts.Roboto['textLBold']};
-      color: ${({ theme }) => theme.colors['base-subtitle']};
-    }
-  }
 `
 
 export const CheckoutButton = styled.button`
@@ -278,15 +230,4 @@ export const CheckoutButton = styled.button`
   &:hover {
     background-color: ${({ theme }) => theme.colors['yellow-dark']};
   }
-`
-
-export const NoCoffeeSelected = styled.span`
-  font: ${({ theme }) => theme.fonts.Roboto['textMBold']};
-  color: ${({ theme }) => theme.colors['base-text']};
-
-  text-align: center;
-
-  margin-bottom: 24px;
-
-
 `

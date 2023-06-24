@@ -17,7 +17,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     :focus {
-        box-shadow: 0 0 0 1px ${({ theme }) => theme.colors['yellow-dark']};
+        /* box-shadow: 0 0 0 1px ${({ theme }) => theme.colors['yellow-dark']}; */
     }
 
     .container {
