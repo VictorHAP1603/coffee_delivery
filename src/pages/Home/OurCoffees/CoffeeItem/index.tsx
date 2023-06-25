@@ -82,7 +82,10 @@ export function CoffeeItem({ coffee }: CoffeeItemProps) {
             <CoffeeBottom>
                 <CoffeePrice>
                     <span>R$</span>
-                    {formatPrice(coffee.price)}
+                    {quantity === 0
+                        ? formatPrice(coffee.price)
+                        : formatPrice(coffee.price * quantity)
+                    }
                 </CoffeePrice>
 
                 <CoffeActions>
