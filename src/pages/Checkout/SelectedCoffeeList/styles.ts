@@ -14,6 +14,8 @@ export const NoCoffeeSelected = styled.span`
   text-align: center;
 
   margin-bottom: 24px;
+  padding-bottom: 24px;
 
+  border-bottom: 1px solid ${({ theme }) => theme.colors['base-button']};
 
 `

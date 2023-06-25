@@ -1,20 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money } from "phosphor-react";
+import { useForm, FormProvider } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as zod from 'zod'
 
 // components
-import { PriceTotalContainer } from "./PriceTotalContainer";
 import { SelectedCoffeesList } from "./SelectedCoffeeList";
+import { PriceTotalContainer } from "./PriceTotalContainer";
+import { CheckoutAddressInput } from "./CheckoutAddressInput";
+import { CheckoutAddressInputMask } from "./CheckoutAddressInputMask";
+import { Loading } from "../../components/Loading";
 
 import {
   CheckoutContainer,
   CompleteYourOrder,
   SelectedCoffees,
-  CheckoutForm,
+  CheckoutFormContainer,
   CheckoutSubtitle,
   CheckoutAddress,
   CheckoutAddressHeader,
   CheckoutAddressContent,
-  CheckoutAddressLabel,
   CheckoutPayment,
   CheckoutPaymentHeader,
   CheckoutPaymentMethods,
@@ -22,8 +27,6 @@ import {
   CheckoutSelectedCoffees,
   CheckoutButton,
 } from "./style";
-
-// import { useCoffee } from "../../hooks/useCoffe";
 
 const paymentMethods = [
   {
@@ -43,21 +46,70 @@ const paymentMethods = [
   },
 ]
 
+const CheckoutFormSchema = zod.object({
+  cep: zod.string().min(9, 'CEP inválido').max(9, 'CEP inválido').nonempty('CEP inválido'),
+  street: zod.string().nonempty('Rua inválida'),
+  number: zod.string().nonempty('Número inválido'),
+  complement: zod.string(),
+  neighborhood: zod.string().nonempty('Bairro inválido'),
+  city: zod.string().nonempty('Cidade inválida'),
+  state: zod.string().nonempty('UF inválido'),
+  // paymentMethod: zod.number().nonempty('Selecione uma forma de pagamento')
+
+})
+
+export type CheckoutFormType = zod.infer<typeof CheckoutFormSchema>
+
 export function Checkout() {
   const [paymentMethodActive, setPaymentMethodActive] = useState<number | null>(null)
+  const [loading, setLoading] = useState(false)
+
+  const CheckoutForm = useForm<CheckoutFormType>({
+    resolver: zodResolver(CheckoutFormSchema)
+  })
+
+  const { handleSubmit, setValue, watch, formState: { errors } } = CheckoutForm
+
+  const valueCep = watch('cep')
 
   function handlePaymentMethodActive(id: number) {
     if (paymentMethodActive === id) {
-      console.log('desativou')
       setPaymentMethodActive(null)
     } else {
       setPaymentMethodActive(id)
     }
   }
 
+  async function verifyIfCepIsValidAndSearchFields(cep: string) {
+    if (cep.length === 9) {
+
+      setLoading(true)
+      const cepWithoutMask = cep.replace('-', '')
+
+      const json =
+        await (await fetch(`https://viacep.com.br/ws/${cepWithoutMask}/json/`)).json()
+
+      setLoading(false)
+      setValue('street', json.logradouro)
+      setValue('neighborhood', json.bairro)
+      setValue('city', json.localidade)
+      setValue('state', json.uf)
+    }
+  }
+
+  function onSubmitConfirmOrder(data: CheckoutFormType) {
+    console.log(data)
+  }
+
+  useEffect(() => {
+    verifyIfCepIsValidAndSearchFields(valueCep)
+  }, [valueCep])
+
+  console.log(errors)
+
   return (
     <CheckoutContainer>
-      <CheckoutForm className="container">
+      <CheckoutFormContainer onSubmit={handleSubmit(onSubmitConfirmOrder)} className="container">
         <CompleteYourOrder>
           <CheckoutSubtitle>Complete seu pedido</CheckoutSubtitle>
 
@@ -71,35 +123,26 @@ export function Checkout() {
               </div>
             </CheckoutAddressHeader>
 
-            <CheckoutAddressContent>
-              <CheckoutAddressLabel>
-                <input type="text" placeholder="CEP" />
-              </CheckoutAddressLabel>
+            <FormProvider {...CheckoutForm}>
+              <CheckoutAddressContent>
+                <CheckoutAddressInputMask
+                  mask="99999-999"
+                  type="text"
+                  placeholder="CEP"
+                  maskChar={null}
+                  keyForm="cep"
+                >
+                  {loading ? <Loading /> : null}
+                </CheckoutAddressInputMask>
 
-              <CheckoutAddressLabel>
-                <input type="text" placeholder="Rua" />
-              </CheckoutAddressLabel>
-
-              <CheckoutAddressLabel>
-                <input type="text" placeholder="Número" />
-              </CheckoutAddressLabel>
-
-              <CheckoutAddressLabel>
-                <input type="text" placeholder="Complemento" />
-              </CheckoutAddressLabel>
-
-              <CheckoutAddressLabel>
-                <input type="text" placeholder="Bairro" />
-              </CheckoutAddressLabel>
-
-              <CheckoutAddressLabel>
-                <input type="text" placeholder="Cidade" />
-              </CheckoutAddressLabel>
-
-              <CheckoutAddressLabel>
-                <input type="text" placeholder="UF" />
-              </CheckoutAddressLabel>
-            </CheckoutAddressContent>
+                <CheckoutAddressInput type="text" placeholder="Rua" keyForm="street" />
+                <CheckoutAddressInput type="text" placeholder="Número" keyForm="number" />
+                <CheckoutAddressInput type="text" placeholder="Complemento" keyForm="complement" />
+                <CheckoutAddressInput type="text" placeholder="Bairro" keyForm="neighborhood" />
+                <CheckoutAddressInput type="text" placeholder="Cidade" keyForm="city" />
+                <CheckoutAddressInput type="text" placeholder="UF" keyForm="state" />
+              </CheckoutAddressContent >
+            </FormProvider>
 
           </CheckoutAddress>
 
@@ -128,7 +171,7 @@ export function Checkout() {
 
           </CheckoutPayment>
 
-        </CompleteYourOrder>
+        </CompleteYourOrder >
 
         <SelectedCoffees>
           <CheckoutSubtitle>Cafés selecionados</CheckoutSubtitle>
@@ -137,10 +180,19 @@ export function Checkout() {
             <SelectedCoffeesList />
             <PriceTotalContainer />
             <CheckoutButton type="submit">Confirmar Pedido</CheckoutButton>
+
+            {/* {Object.keys(errors).length > 0 && (
+              <p className="error">Preencha todos os campos corretamente</p>
+            )}
+
+            {Object.keys(errors).length === 0 && !paymentMethodActive && (
+              <p className="error">Selecione uma forma de pagamento</p>
+            )} */}
+
           </CheckoutSelectedCoffees>
         </SelectedCoffees>
 
-      </CheckoutForm>
-    </CheckoutContainer>
+      </CheckoutFormContainer >
+    </CheckoutContainer >
   )
 }

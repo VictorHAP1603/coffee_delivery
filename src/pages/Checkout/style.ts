@@ -14,7 +14,7 @@ export const CompleteYourOrder = styled.div`
 export const SelectedCoffees = styled.div`
   flex: 0.4;
 `
-export const CheckoutForm = styled.form`
+export const CheckoutFormContainer = styled.form`
   display: flex;
   gap: 32px;
 `
@@ -112,34 +112,6 @@ export const CheckoutAddressContent = styled.div`
   }
 `
 
-export const CheckoutAddressLabel = styled.label`
-  input {
-    background-color: ${({ theme }) => theme.colors['base-input']};
-    border: none;
-
-    font: ${({ theme }) => theme.fonts.Roboto['textS']};
-    color: ${({ theme }) => theme.colors['base-text']};
-
-    padding: 12px;
-    border-radius: 4px;
-
-    transition: all .4s;
-    width: 100%;
-
-    /* margin: 10px; */
-
-    &::placeholder {
-      font: ${({ theme }) => theme.fonts.Roboto['textS']};
-      color: ${({ theme }) => theme.colors['base-label']};
-    }
-
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 2px ${({ theme }) => theme.colors['yellow-dark']};
-    }
-  }
-`
-
 // =========================================================
 
 
@@ -208,6 +180,16 @@ export const TypeOfPaymentItem = styled.button`
 
 export const CheckoutSelectedCoffees = styled(CheckoutBlock)`
   border-radius: 0 44px 0 44px;
+
+  .error {
+    color: ${({ theme }) => theme.colors['red']};
+    font: ${({ theme }) => theme.fonts.Roboto['textLBold']};
+    margin-top: 24px;
+
+    display: block;
+    text-align: left;
+
+  }
 `
 
 export const CheckoutButton = styled.button`
