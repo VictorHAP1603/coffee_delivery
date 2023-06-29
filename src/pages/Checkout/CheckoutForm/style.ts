@@ -1,5 +1,14 @@
 import { styled } from "styled-components"
 
+export const CheckoutFormContainer = styled.form`
+  display: flex;
+  gap: 32px;
+
+  @media (max-width: 1670px) {
+    flex-direction: column;
+  }
+`
+
 export const CompleteYourOrder = styled.div`
   flex: 0.6;
 
@@ -9,10 +18,6 @@ export const CompleteYourOrder = styled.div`
 
 export const SelectedCoffees = styled.div`
   flex: 0.4;
-`
-export const CheckoutFormContainer = styled.form`
-  display: flex;
-  gap: 32px;
 `
 
 export const CheckoutSubtitle = styled.h3`
@@ -106,6 +111,33 @@ export const CheckoutAddressContent = styled.div`
   label:nth-child(7) {
     grid-column: 3/4;
   }
+
+  @media (max-width: 500px) {
+    label:nth-child(1) {
+      grid-column: 1/4;
+    }
+
+    label:nth-child(3) {
+      grid-column: 1/4;
+    }
+
+    label:nth-child(4) {
+      grid-column: 1/4;
+    }
+
+    label:nth-child(5) {
+      grid-column: 1/4;
+    }
+
+    label:nth-child(6) {
+      grid-column: 1/4;
+    }
+
+    label:nth-child(7) {
+      grid-column: 1/4;
+    }
+
+  }
 `
 
 // =========================================================
@@ -127,6 +159,11 @@ export const CheckoutPaymentMethods = styled.div`
   justify-content: space-between;
 
   gap: 12px;
+
+  @media (max-width: 790px) {
+    flex-direction: column;
+  }
+
 `
 
 export const TypeOfPaymentItem = styled.button`

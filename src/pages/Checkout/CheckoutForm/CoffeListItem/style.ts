@@ -8,20 +8,25 @@ export const CoffeeListItemContainer = styled.div`
   margin-bottom: 24px;
 
   border-bottom: 1px solid ${({ theme }) => theme.colors['base-button']};
+  /* container-name: coffeelistitem;
+  container-type: size; */
 
   img {
     width: 64px;
     margin-right: 20px;
   }
 
-`
+  @media (max-width: 520px) {
+    flex-direction: column;
+    align-items: center;
 
-export const CoffeItemPrice = styled.span`
-  display: inline-block;
+    gap: 15px;
 
-  margin-left: auto;
-  color: ${({ theme }) => theme.colors['base-text']};
-  font: ${({ theme }) => theme.fonts.Roboto['textMBold']};
+    img {
+      margin-right: 0px;
+    }
+  }
+
 `
 
 export const CoffeItemContent = styled.div`
@@ -40,6 +45,14 @@ export const CoffeItemContent = styled.div`
 
     gap: 8px;
     margin-top: 10px;
+  }
+
+   @media (max-width: 520px) {
+    order: 2;
+
+    span {
+      text-align: center;
+    }
   }
 `
 
@@ -69,5 +82,20 @@ export const CoffeeButtonRemove = styled.button`
 
   &:hover {
     background-color: ${({ theme }) => theme.colors['base-hover']};
+  }
+`
+
+export const CoffeItemPrice = styled.span`
+  display: inline-block;
+
+  margin-left: auto;
+  color: ${({ theme }) => theme.colors['base-text']};
+  font: ${({ theme }) => theme.fonts.Roboto['textMBold']};
+
+  @media (max-width: 520px) {
+    order: 1;
+
+    margin-left: 0px;
+    text-align: center;
   }
 `

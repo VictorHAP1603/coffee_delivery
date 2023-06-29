@@ -13,6 +13,10 @@ export const HeaderContainer = styled.header`
         align-items: center;
         justify-content: space-between;
         height: 100%;
+
+        @media (max-width: 408px) {
+            gap: 30px;
+        }
     }
 
 `

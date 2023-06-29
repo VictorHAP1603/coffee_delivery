@@ -12,14 +12,22 @@ import CheckoutSuccessImg from '../../assets/img/checkout-success.png'
 import { useCheckout } from "../../hooks/useCheckout";
 import { useEffect } from "react";
 import { useCoffee } from "../../hooks/useCoffe";
+import { useNavigate } from "react-router-dom";
 
 export function ConfirmedOrder() {
 
     const { address, paymentMethodSelected } = useCheckout()
     const { cleanCart } = useCoffee()
+    const navigate = useNavigate()
 
     useEffect(() => {
         cleanCart()
+    }, [])
+
+    useEffect(() => {
+        if (!address && !paymentMethodSelected) {
+            navigate('/checkout')
+        }
     }, [])
 
     return (
@@ -69,7 +77,9 @@ export function ConfirmedOrder() {
 
                 </ConfirmedOrderInfos>
 
-                <ConfirmedOrderImage src={CheckoutSuccessImg} />
+                <ConfirmedOrderImage>
+                    <img src={CheckoutSuccessImg} />
+                </ConfirmedOrderImage>
 
             </ConfirmedOrderContent>
 

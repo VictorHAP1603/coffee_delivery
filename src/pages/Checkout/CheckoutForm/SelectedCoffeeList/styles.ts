@@ -42,6 +42,7 @@ export const ButtonBackToHome = styled(NavLink)`
 
   text-decoration: none;
   text-transform: uppercase;
+  text-align: center;
 
   transition: all 0.4s;
 

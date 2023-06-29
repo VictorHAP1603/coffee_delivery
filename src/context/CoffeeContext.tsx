@@ -94,9 +94,6 @@ export const CoffeeProvider = ({ children }: CoffeeProviderProps) => {
         // }, 2000)
     }, [])
 
-    useEffect(() => {
-        console.log(coffeState)
-    }, [coffeState])
 
     return (
         <CoffeeContext.Provider

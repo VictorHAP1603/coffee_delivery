@@ -6,8 +6,6 @@ export function SelectedCoffeesList() {
   const { coffeState } = useCoffee()
   const { coffesAdded } = coffeState
 
-  console.log(coffesAdded?.length === 0)
-
   return (
     <SelectedCoffeesListContainer>
       {!coffesAdded && (
@@ -18,7 +16,7 @@ export function SelectedCoffeesList() {
       )}
 
       {coffesAdded && coffesAdded.length > 0 && coffesAdded.map(coffee => (
-        <CoffeeListItem coffee={coffee} />
+        <CoffeeListItem key={coffee.id} coffee={coffee} />
       ))}
     </SelectedCoffeesListContainer>
   )

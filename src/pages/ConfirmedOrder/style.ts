@@ -23,6 +23,10 @@ export const ConfirmedOrderContent = styled.div`
     display: flex;
 
     gap: 100px;
+
+    @media (max-width: 1300px) {
+        flex-direction: column;
+    }
 `
 
 export const ConfirmedOrderInfos = styled.div`
@@ -111,9 +115,30 @@ export const ConfirmedOrderInfoItem = styled.div`
         }
 
     }
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+
+        div:first-child {
+            width: 50px;
+            height: 50px;
+        }
+
+        div:last-child {
+            margin-left: 0;
+
+            text-align: center;
+        }
+    }
+
 `
 
-export const ConfirmedOrderImage = styled.img`
+export const ConfirmedOrderImage = styled.div`
     flex: 1;
-`
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    max-width: 100%;
+`

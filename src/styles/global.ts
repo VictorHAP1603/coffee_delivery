@@ -30,6 +30,10 @@ export const GlobalStyle = createGlobalStyle`
         @media (max-width: 730px) {
             padding: 0 0rem;
         }
+
+        @media (max-width: 400px) {
+            width: 90%;
+        }
     }
 
     button {
