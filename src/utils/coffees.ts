@@ -36,7 +36,7 @@ export const coffeeList: CoffeeProps[] = [
         tags: [{ id: uuidV4(), tag: 'tradicional' }],
         title: 'Expresso Tradicional',
         description: 'O tradicional café feito com água quente e grãos moídos',
-        price: 990
+        price: 1290
     },
     {
         id: 2,
@@ -68,7 +68,7 @@ export const coffeeList: CoffeeProps[] = [
         tags: [{ id: uuidV4(), tag: 'tradicional' }, { id: uuidV4(), tag: 'com leite' }],
         title: 'Café com Leite',
         description: 'Meio a meio de expresso tradicional com leite vaporizado',
-        price: 990
+        price: 690
     },
     {
         id: 6,
@@ -92,7 +92,7 @@ export const coffeeList: CoffeeProps[] = [
         tags: [{ id: uuidV4(), tag: 'tradicional' }, { id: uuidV4(), tag: 'com leite' }],
         title: 'Macchiato',
         description: 'Café expresso misturado com um pouco de leite quente e espuma',
-        price: 990
+        price: 1490
     },
     {
         id: 11,
@@ -108,7 +108,7 @@ export const coffeeList: CoffeeProps[] = [
         tags: [{ id: uuidV4(), tag: 'especial' }, { id: uuidV4(), tag: 'com leite' }],
         title: 'Chocolate Quente',
         description: 'Bebida feita com chocolate dissolvido no leite quente e café',
-        price: 990
+        price: 1990
     },
     {
         id: 12,

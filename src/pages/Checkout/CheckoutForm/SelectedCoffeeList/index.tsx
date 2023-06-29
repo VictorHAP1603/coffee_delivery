@@ -1,4 +1,4 @@
-import { useCoffee } from "../../../hooks/useCoffe";
+import { useCoffee } from "../../../../hooks/useCoffe";
 import { CoffeeListItem } from "../CoffeListItem";
 import { NoCoffeeSelected, SelectedCoffeesListContainer } from "./styles";
 

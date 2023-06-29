@@ -1,4 +1,4 @@
-import { useCoffee } from "../../../hooks/useCoffe";
+import { useCoffee } from "../../../../hooks/useCoffe";
 import { PriceContainer } from "./style";
 
 export function PriceTotalContainer() {

@@ -16,10 +16,6 @@ export const GlobalStyle = createGlobalStyle`
         font-family: 'Roboto', sans-serif;
     }
 
-    :focus {
-        /* box-shadow: 0 0 0 1px ${({ theme }) => theme.colors['yellow-dark']}; */
-    }
-
     .container {
         /* width: 144.4rem; */
         width: 80%;

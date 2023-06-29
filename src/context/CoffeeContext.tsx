@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer, useMemo } from 'react'
+import { createContext, useEffect, useReducer, useMemo, useCallback } from 'react'
 import { CoffeesAddedListProps, coffeeList } from '../utils/coffees';
 
 // Reducers
@@ -45,35 +45,35 @@ export const CoffeeProvider = ({ children }: CoffeeProviderProps) => {
         dispatch(removeCoffeeFromTheCartAction(id))
     }
 
-    function calculateTotalPriceOfItemsInCart() {
+    const calculateTotalPriceOfItemsInCart = useCallback(() => {
         const totalAmount = coffeState.coffesAdded?.reduce((acc, item) => {
             return acc + (item.quantity! * item.price!)
         }, 0)
 
         return totalAmount ? totalAmount : 0
-    }
+    }, [coffeState.coffesAdded])
 
-    function calculateTotalPrice() {
+    const calculateTotalPrice = useCallback(() => {
 
         const totalAmount = calculateTotalPriceOfItemsInCart()
         const totalDelivery = 350
 
         return totalAmount + totalDelivery
-    }
+    }, [calculateTotalPriceOfItemsInCart])
 
     const formattedTotalPriceOfItemsInCart = useMemo(() => {
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL'
         }).format((calculateTotalPriceOfItemsInCart() / 100))
-    }, [coffeState.coffesAdded])
+    }, [calculateTotalPriceOfItemsInCart])
 
     const formattedTotalPrice = useMemo(() => {
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL'
         }).format((calculateTotalPrice() / 100))
-    }, [coffeState.coffesAdded])
+    }, [calculateTotalPrice])
 
     const totalItensOnCart = useMemo(() => {
         return coffeState.coffesAdded?.reduce((acc, item) => {

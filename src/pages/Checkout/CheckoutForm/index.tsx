@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { Bank, CreditCard, CurrencyDollar, MapPinLine, Money } from "phosphor-react";
+import { CurrencyDollar, MapPinLine } from "phosphor-react";
 import { useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
+import { useNavigate } from "react-router-dom";
 
 // components
-import { SelectedCoffeesList } from "../SelectedCoffeeList";
-import { PriceTotalContainer } from "../PriceTotalContainer";
-import { CheckoutAddressInput } from "../CheckoutAddressInput";
-import { CheckoutAddressInputMask } from "../CheckoutAddressInputMask";
+import { SelectedCoffeesList } from "./SelectedCoffeeList";
+import { PriceTotalContainer } from "./PriceTotalContainer";
+import { CheckoutAddressInput } from "./CheckoutAddressInput";
+import { CheckoutAddressInputMask } from "./CheckoutAddressInputMask";
 import { Loading } from "../../../components/Loading";
 
 import {
@@ -26,24 +27,8 @@ import {
   CheckoutSelectedCoffees,
   CheckoutButton,
 } from "./style";
-
-const paymentMethods = [
-  {
-    id: 1,
-    title: "Cartão de Crédito",
-    icon: <CreditCard size={22} />
-  },
-  {
-    id: 2,
-    title: "Cartão de Débito",
-    icon: <Bank size={22} />
-  },
-  {
-    id: 3,
-    title: "Dinheiro",
-    icon: <Money size={22} />
-  },
-]
+import { paymentMethods } from "../../../utils/paymentMethods";
+import { useCheckout } from "../../../hooks/useCheckout";
 
 const CheckoutFormSchema = zod.object({
   cep: zod.string().min(9, 'CEP inválido').max(9, 'CEP inválido').nonempty('CEP inválido'),
@@ -68,6 +53,9 @@ export function CheckoutForm() {
     resolver: zodResolver(CheckoutFormSchema)
   })
 
+  const navigate = useNavigate()
+  const { editAddress, editPaymentMethod } = useCheckout()
+
   const { handleSubmit, setValue, watch, formState: { errors } } = CheckoutForm
 
   const valueCep = watch('cep')
@@ -81,23 +69,6 @@ export function CheckoutForm() {
     }
   }
 
-  async function verifyIfCepIsValidAndSearchFields(cep: string) {
-    if (cep.length === 9) {
-
-      setLoadingCEP(true)
-      const cepWithoutMask = cep.replace('-', '')
-
-      const json =
-        await (await fetch(`https://viacep.com.br/ws/${cepWithoutMask}/json/`)).json()
-
-      setLoadingCEP(false)
-      setValue('street', json.logradouro)
-      setValue('neighborhood', json.bairro)
-      setValue('city', json.localidade)
-      setValue('state', json.uf)
-    }
-  }
-
   function onSubmitConfirmOrder(data: CheckoutFormType) {
 
     if (!paymentMethodActive) {
@@ -105,15 +76,36 @@ export function CheckoutForm() {
       return
     }
 
+    // api de realiazar pedido
+    // setTimeout(() =)
+    editAddress(data)
+    editPaymentMethod(paymentMethodActive)
     setPaymentMethodMessageError(null)
     console.log(data)
+
+    navigate('/confirmed-order')
   }
 
   useEffect(() => {
-    (async () => {
-      await verifyIfCepIsValidAndSearchFields(valueCep)
-    })()
-  }, [valueCep])
+    
+    async function verifyIfCepIsValidAndSearchFields() {
+      if (valueCep && valueCep.length === 9) {
+        setLoadingCEP(true)
+        const cepWithoutMask = valueCep.replace('-', '')
+  
+        const json =
+          await (await fetch(`https://viacep.com.br/ws/${cepWithoutMask}/json/`)).json()
+  
+        setLoadingCEP(false)
+        setValue('street', json.logradouro)
+        setValue('neighborhood', json.bairro)
+        setValue('city', json.localidade)
+        setValue('state', json.uf)
+      }
+    }
+
+    verifyIfCepIsValidAndSearchFields()
+  }, [valueCep, setValue])
 
   return (
     <CheckoutFormContainer onSubmit={handleSubmit(onSubmitConfirmOrder)} className="container">

@@ -30,8 +30,9 @@ export const CheckoutAddressInputContainer = styled.label`
     }
   }
 
-  .loading {
+  .loading__box {
     color: ${({ theme }) => theme.colors['purple']};
+    margin-left: 16px;
   }
 
 `

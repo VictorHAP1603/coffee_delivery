@@ -1,7 +1,7 @@
 import { Trash } from "phosphor-react";
-import { CoffeeAddQuantity } from "../../../components/CoffeeAddQuantity";
-import { CoffeesAddedListProps } from "../../../utils/coffees";
-import { formatPrice } from "../../../utils/formatPrice";
+import { CoffeeAddQuantity } from "../../../../components/CoffeeAddQuantity";
+import { CoffeesAddedListProps } from "../../../../utils/coffees";
+import { formatPrice } from "../../../../utils/formatPrice";
 
 import {
   CoffeeListItemContainer,
@@ -9,7 +9,7 @@ import {
   CoffeItemContent,
   CoffeeButtonRemove
 } from "./style";
-import { useCoffee } from "../../../hooks/useCoffe";
+import { useCoffee } from "../../../../hooks/useCoffe";
 
 interface CoffeeListItemProps {
   coffee: CoffeesAddedListProps
