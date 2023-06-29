@@ -1,5 +1,5 @@
 import { CurrencyDollar, MapPin, Timer } from "phosphor-react";
-import { 
+import {
     ConfirmedOrderContainer,
     ConfirmedOrderHeader,
     ConfirmedOrderContent,
@@ -10,64 +10,69 @@ import {
 
 import CheckoutSuccessImg from '../../assets/img/checkout-success.png'
 import { useCheckout } from "../../hooks/useCheckout";
+import { useEffect } from "react";
+import { useCoffee } from "../../hooks/useCoffe";
 
 export function ConfirmedOrder() {
 
-    const { infoPayment } = useCheckout()
+    const { address, paymentMethodSelected } = useCheckout()
+    const { cleanCart } = useCoffee()
 
-    const { address, paymentMethod } = infoPayment
+    useEffect(() => {
+        cleanCart()
+    }, [])
 
-  return (
-    <ConfirmedOrderContainer className="container">
-        
-        <ConfirmedOrderHeader>
-            <h2>Uhu! Pedido confirmado</h2>
-            <p>Agora é só aguardar que logo o café chegará até você</p>
-        </ConfirmedOrderHeader>
+    return (
+        <ConfirmedOrderContainer className="container">
 
-        <ConfirmedOrderContent>
+            <ConfirmedOrderHeader>
+                <h2>Uhu! Pedido confirmado</h2>
+                <p>Agora é só aguardar que logo o café chegará até você</p>
+            </ConfirmedOrderHeader>
 
-            <ConfirmedOrderInfos>
-                
-                <ConfirmedOrderInfoItem>
-                    <div>
-                        <MapPin size={18} weight="fill" />
-                    </div>
+            <ConfirmedOrderContent>
 
-                    <div>
-                        <p>Entrega em <span className="bold">{address?.street}, {address?.number} {address?.complement}</span></p>
-                        <p>{address?.neighborhood} - {address?.city}, {address?.state}</p>
-                    </div>
-                </ConfirmedOrderInfoItem>
+                <ConfirmedOrderInfos>
 
-                <ConfirmedOrderInfoItem>
-                    <div>
-                        <Timer size={18} weight="fill" />
-                    </div>
+                    <ConfirmedOrderInfoItem>
+                        <div>
+                            <MapPin size={18} weight="fill" />
+                        </div>
 
-                    <div>
-                        <p>Previsão de entrega</p>
-                        <p className="bold">20 min - 30 min</p>
-                    </div>
-                </ConfirmedOrderInfoItem>
+                        <div>
+                            <p>Entrega em <span className="bold">{address?.street}, {address?.number} {address?.complement}</span></p>
+                            <p>{address?.neighborhood} - {address?.city}, {address?.state}</p>
+                        </div>
+                    </ConfirmedOrderInfoItem>
 
-                <ConfirmedOrderInfoItem>
-                    <div>
-                        <CurrencyDollar size={18} weight="fill" />
-                    </div>
+                    <ConfirmedOrderInfoItem>
+                        <div>
+                            <Timer size={18} weight="fill" />
+                        </div>
 
-                    <div>
-                        <p>Pagamento na entrega</p>
-                        <p className="bold">{paymentMethod}</p>
-                    </div>
-                </ConfirmedOrderInfoItem>
+                        <div>
+                            <p>Previsão de entrega</p>
+                            <p className="bold">20 min - 30 min</p>
+                        </div>
+                    </ConfirmedOrderInfoItem>
 
-            </ConfirmedOrderInfos>
+                    <ConfirmedOrderInfoItem>
+                        <div>
+                            <CurrencyDollar size={18} weight="fill" />
+                        </div>
 
-            <ConfirmedOrderImage src={CheckoutSuccessImg} />
+                        <div>
+                            <p>Pagamento na entrega</p>
+                            <p className="bold">{paymentMethodSelected}</p>
+                        </div>
+                    </ConfirmedOrderInfoItem>
 
-        </ConfirmedOrderContent>
+                </ConfirmedOrderInfos>
 
-    </ConfirmedOrderContainer>
-  );
+                <ConfirmedOrderImage src={CheckoutSuccessImg} />
+
+            </ConfirmedOrderContent>
+
+        </ConfirmedOrderContainer>
+    );
 }

@@ -41,7 +41,7 @@ export const coffeeReducer = (state: CoffeeState, action: CoffeeAction) => {
 
         }
 
-        case CoffeeActionTypes.REMOVE_ONE_COFFEE_FROM_THE_CART: {
+        case CoffeeActionTypes.DECREASE_COFFEE_FROM_THE_CART: {
             const id = action.payload
             const coffeeSelectedIndex = state.coffesAdded?.findIndex(coffee => coffee.id === id)
 
@@ -74,6 +74,10 @@ export const coffeeReducer = (state: CoffeeState, action: CoffeeAction) => {
             return state
         }
 
+        case CoffeeActionTypes.CLEAN_CART:
+            return produce(state, draft => {
+                draft.coffesAdded = []
+            })
         default:
             return state;
     }

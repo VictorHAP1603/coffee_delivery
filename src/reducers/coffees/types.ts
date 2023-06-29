@@ -12,7 +12,7 @@ export interface AddCoffeeToCartActionProps {
 }
 
 export interface RemoveOneCoffeeFromTheCartActionProps {
-  type: CoffeeActionTypes.REMOVE_ONE_COFFEE_FROM_THE_CART
+  type: CoffeeActionTypes.DECREASE_COFFEE_FROM_THE_CART
   payload: number
 }
 
@@ -21,8 +21,13 @@ export interface RemoveCoffeeFromTheCartActionProps {
   payload: number
 }
 
+export interface CleanCartActionProps {
+  type: CoffeeActionTypes.CLEAN_CART
+}
+
 export type CoffeeAction =
   RequestCoffeeActionProps |
   AddCoffeeToCartActionProps |
   RemoveOneCoffeeFromTheCartActionProps |
-  RemoveCoffeeFromTheCartActionProps
+  RemoveCoffeeFromTheCartActionProps |
+  CleanCartActionProps

@@ -19,7 +19,7 @@ export function CoffeeListItem({ coffee }: CoffeeListItemProps) {
 
   const {
     addToCart,
-    removeOneCoffeeFromTheCart,
+    decreaseCoffeeFromTheCart,
     removeCoffeeFromTheCart
   } = useCoffee()
 
@@ -31,7 +31,7 @@ export function CoffeeListItem({ coffee }: CoffeeListItemProps) {
   }
 
   function handleRemoveQuantity() {
-    removeOneCoffeeFromTheCart(coffee.id)
+    decreaseCoffeeFromTheCart(coffee.id)
   }
 
   function handleRemoveCoffeeFromTheCart() {

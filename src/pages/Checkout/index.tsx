@@ -8,7 +8,7 @@ import {
 
 export function Checkout() {
   return (
-    <CheckoutContainer>    
+    <CheckoutContainer>
       {/* <CheckoutStep /> */}
       <CheckoutForm />
     </CheckoutContainer >

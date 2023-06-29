@@ -1,12 +1,19 @@
 import { CoffeeProps, CoffeesAddedListProps } from "../../utils/coffees";
-import { AddCoffeeToCartActionProps, RemoveCoffeeFromTheCartActionProps, RemoveOneCoffeeFromTheCartActionProps, RequestCoffeeActionProps } from "./types";
+import {
+    AddCoffeeToCartActionProps,
+    CleanCartActionProps,
+    RemoveCoffeeFromTheCartActionProps,
+    RemoveOneCoffeeFromTheCartActionProps,
+    RequestCoffeeActionProps
+} from "./types";
 
 
 export enum CoffeeActionTypes {
     REQUEST_COFFEES = 'REQUEST_COFFEES',
     ADD_COFFEE_TO_CART = 'ADD_COFFEE_TO_CART',
-    REMOVE_ONE_COFFEE_FROM_THE_CART = 'REMOVE_ONE_COFFEE_FROM_THE_CART',
-    REMOVE_COFFEE_FROM_THE_CART = 'REMOVE_COFFEE_FROM_THE_CART'
+    DECREASE_COFFEE_FROM_THE_CART = 'DECREASE_COFFEE_FROM_THE_CART',
+    REMOVE_COFFEE_FROM_THE_CART = 'REMOVE_COFFEE_FROM_THE_CART',
+    CLEAN_CART = 'CLEAN_CART'
 }
 
 export function requestCoffeesAction(coffees: CoffeeProps[]): RequestCoffeeActionProps {
@@ -23,9 +30,9 @@ export function addCoffeeToCartAction(coffeesAdded: CoffeesAddedListProps[]): Ad
     }
 }
 
-export function removeOneCoffeeFromTheCartAction(id: number): RemoveOneCoffeeFromTheCartActionProps {
+export function decreaseCoffeeFromTheCartAction(id: number): RemoveOneCoffeeFromTheCartActionProps {
     return {
-        type: CoffeeActionTypes.REMOVE_ONE_COFFEE_FROM_THE_CART,
+        type: CoffeeActionTypes.DECREASE_COFFEE_FROM_THE_CART,
         payload: id
     }
 }
@@ -34,5 +41,11 @@ export function removeCoffeeFromTheCartAction(id: number): RemoveCoffeeFromTheCa
     return {
         type: CoffeeActionTypes.REMOVE_COFFEE_FROM_THE_CART,
         payload: id
+    }
+}
+
+export function cleanCartAction(): CleanCartActionProps {
+    return {
+        type: CoffeeActionTypes.CLEAN_CART,
     }
 }

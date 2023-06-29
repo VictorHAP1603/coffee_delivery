@@ -6,8 +6,9 @@ import { CoffeeState, coffeeReducer } from '../reducers/coffees/reducer';
 import {
     addCoffeeToCartAction,
     removeCoffeeFromTheCartAction,
-    removeOneCoffeeFromTheCartAction,
-    requestCoffeesAction
+    decreaseCoffeeFromTheCartAction,
+    requestCoffeesAction,
+    cleanCartAction
 } from '../reducers/coffees/action';
 
 interface CoffeContextProps {
@@ -16,8 +17,9 @@ interface CoffeContextProps {
     formattedTotalPrice: string
     formattedTotalPriceOfItemsInCart: string
     addToCart: (coffeesAddedList: CoffeesAddedListProps[]) => void
-    removeOneCoffeeFromTheCart: (id: number) => void
+    decreaseCoffeeFromTheCart: (id: number) => void
     removeCoffeeFromTheCart: (id: number) => void
+    cleanCart: () => void
 }
 
 interface CoffeeProviderProps {
@@ -37,12 +39,16 @@ export const CoffeeProvider = ({ children }: CoffeeProviderProps) => {
         dispatch(addCoffeeToCartAction(coffeesAddedList))
     }
 
-    function removeOneCoffeeFromTheCart(id: number) {
-        dispatch(removeOneCoffeeFromTheCartAction(id))
+    function decreaseCoffeeFromTheCart(id: number) {
+        dispatch(decreaseCoffeeFromTheCartAction(id))
     }
 
     function removeCoffeeFromTheCart(id: number) {
         dispatch(removeCoffeeFromTheCartAction(id))
+    }
+
+    function cleanCart() {
+        dispatch(cleanCartAction())
     }
 
     const calculateTotalPriceOfItemsInCart = useCallback(() => {
@@ -100,8 +106,9 @@ export const CoffeeProvider = ({ children }: CoffeeProviderProps) => {
                 formattedTotalPrice,
                 formattedTotalPriceOfItemsInCart,
                 addToCart,
-                removeOneCoffeeFromTheCart,
-                removeCoffeeFromTheCart
+                decreaseCoffeeFromTheCart,
+                removeCoffeeFromTheCart,
+                cleanCart
             }}
         >
             {children}

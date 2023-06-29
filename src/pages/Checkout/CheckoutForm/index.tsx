@@ -29,6 +29,7 @@ import {
 } from "./style";
 import { paymentMethods } from "../../../utils/paymentMethods";
 import { useCheckout } from "../../../hooks/useCheckout";
+import { useCoffee } from "../../../hooks/useCoffe";
 
 const CheckoutFormSchema = zod.object({
   cep: zod.string().min(9, 'CEP inválido').max(9, 'CEP inválido').nonempty('CEP inválido'),
@@ -46,13 +47,15 @@ export type CheckoutFormType = zod.infer<typeof CheckoutFormSchema>
 
 export function CheckoutForm() {
   const [paymentMethodActive, setPaymentMethodActive] = useState<number | null>(null)
-  const [paymentMethodMessageError, setPaymentMethodMessageError] = useState<string | null>(null)
+  const [formMessageError, setFormMessageError] = useState<string | null>(null)
   const [loadingCEP, setLoadingCEP] = useState(false)
+  const [loadingSubmit, setLoadingSubmit] = useState(false)
 
   const CheckoutForm = useForm<CheckoutFormType>({
     resolver: zodResolver(CheckoutFormSchema)
   })
 
+  const { coffeState } = useCoffee()
   const navigate = useNavigate()
   const { editAddress, editPaymentMethod } = useCheckout()
 
@@ -65,37 +68,43 @@ export function CheckoutForm() {
       setPaymentMethodActive(null)
     } else {
       setPaymentMethodActive(id)
-      setPaymentMethodMessageError(null)
+      setFormMessageError(null)
     }
   }
 
   function onSubmitConfirmOrder(data: CheckoutFormType) {
 
     if (!paymentMethodActive) {
-      setPaymentMethodMessageError('Selecione uma forma de pagamento')
+      setFormMessageError('Selecione uma forma de pagamento')
+      return
+    }
+
+    if (coffeState.coffesAdded && coffeState.coffesAdded.length === 0) {
+      setFormMessageError('Adicione pelo menos um café')
       return
     }
 
     // api de realiazar pedido
-    // setTimeout(() =)
-    editAddress(data)
-    editPaymentMethod(paymentMethodActive)
-    setPaymentMethodMessageError(null)
-    console.log(data)
-
-    navigate('/confirmed-order')
+    setLoadingSubmit(true)
+    setTimeout(() => {
+      editAddress(data)
+      editPaymentMethod(paymentMethodActive)
+      setFormMessageError(null)
+      setLoadingSubmit(false)
+      navigate('/confirmed-order')
+    }, 2000)
   }
 
   useEffect(() => {
-    
+
     async function verifyIfCepIsValidAndSearchFields() {
       if (valueCep && valueCep.length === 9) {
         setLoadingCEP(true)
         const cepWithoutMask = valueCep.replace('-', '')
-  
+
         const json =
           await (await fetch(`https://viacep.com.br/ws/${cepWithoutMask}/json/`)).json()
-  
+
         setLoadingCEP(false)
         setValue('street', json.logradouro)
         setValue('neighborhood', json.bairro)
@@ -184,10 +193,11 @@ export function CheckoutForm() {
             <p className="error">Preencha todos os campos corretamente</p>
           )}
 
-          {Object.keys(errors).length === 0 && paymentMethodMessageError && (
-            <p className="error">{paymentMethodMessageError}</p>
+          {Object.keys(errors).length === 0 && formMessageError && (
+            <p className="error">{formMessageError}</p>
           )}
 
+          {loadingSubmit && <Loading />}
         </CheckoutSelectedCoffees>
       </SelectedCoffees>
 

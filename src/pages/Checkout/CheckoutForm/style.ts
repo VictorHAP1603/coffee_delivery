@@ -186,6 +186,17 @@ export const CheckoutSelectedCoffees = styled(CheckoutBlock)`
     text-align: left;
 
   }
+
+  .loading__box {
+    margin-top: 20px;
+    color: ${({ theme }) => theme.colors['purple']};
+
+    svg {
+      height: 40px;
+      width: 40px;
+    }
+
+  }
 `
 
 export const CheckoutButton = styled.button`
