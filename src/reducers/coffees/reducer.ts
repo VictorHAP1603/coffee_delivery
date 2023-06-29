@@ -76,7 +76,7 @@ export const coffeeReducer = (state: CoffeeState, action: CoffeeAction) => {
 
         case CoffeeActionTypes.CLEAN_CART:
             return produce(state, draft => {
-                draft.coffesAdded = []
+                draft.coffesAdded = undefined
             })
         default:
             return state;
